@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OB1E 글리치 애니메이션</title>
+  <style>
+    /* Reset & Base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    /* Logo Container */
+    .logo-container {
+      position: relative;
+      font-size: 8rem;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      user-select: none;
+      animation: logoGlitch 8s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    .logo {
+      position: relative;
+      z-index: 2;
+    }
+
+    .one {
+      color: #ff4500; /* 항상 오렌지 */
+      display: inline-block;
+      position: relative;
+      animation: oneToSlash 8s ease-in-out infinite;
+    }
+
+    /* Glitch Layers */
+    .glitch-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: #fff;
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .glitch-1 {
+      color: #ff0080;
+      transform: translateX(-2px);
+      animation: glitch1 8s ease-in-out infinite;
+    }
+
+    .glitch-2 {
+      color: #00ff80;
+      transform: translateX(2px);
+      animation: glitch2 8s ease-in-out infinite;
+    }
+
+    /* Scanlines */
+    .scanlines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(transparent 50%, rgba(0, 255, 0, 0.03) 50%);
+      background-size: 100% 4px;
+      pointer-events: none;
+      animation: scanlines 0.1s linear infinite;
+      z-index: 3;
+    }
+
+    /* Noise Overlay */
+    .noise {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E");
+      opacity: 0;
+      animation: noise 8s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    /* Animations */
+    @keyframes oneToSlash {
+      0%, 25%, 40%, 85%, 100% {
+        transform: rotate(0deg) scale(1);
+        filter: hue-rotate(0deg) blur(0px) saturate(1) brightness(1);
+      }
+      30% {
+        transform: rotate(4deg) scale(1.03);
+        filter: hue-rotate(30deg) blur(1px) saturate(1.2) brightness(1.1);
+      }
+      30.2% {
+        transform: rotate(-6deg) scale(0.94);
+        filter: hue-rotate(-40deg) blur(2px) saturate(0.8) brightness(0.9);
+      }
+      32% {
+        transform: rotate(5deg) scale(1.04);
+        filter: hue-rotate(35deg) blur(1px) saturate(1.3) brightness(1.15);
+      }
+      32.2% {
+        transform: rotate(-4deg) scale(0.96);
+        filter: hue-rotate(-25deg) blur(1px) saturate(0.85) brightness(0.95);
+      }
+      35% {
+        transform: rotate(3deg) scale(1.02);
+        filter: hue-rotate(20deg) blur(1px) saturate(1.1) brightness(1.05);
+      }
+      35.2% {
+        transform: rotate(-5deg) scale(0.97);
+        filter: hue-rotate(-30deg) blur(1px) saturate(0.9) brightness(0.98);
+      }
+      38% {
+        transform: rotate(2deg) scale(1.01);
+        filter: hue-rotate(15deg) blur(0px) saturate(1.05) brightness(1.02);
+      }
+      87% {
+        transform: rotate(-2deg) scale(1.01);
+        filter: hue-rotate(-15deg) blur(0px) saturate(1.1) brightness(1.03);
+      }
+      89% {
+        transform: rotate(3deg) scale(0.98);
+        filter: hue-rotate(20deg) blur(1px) saturate(0.9) brightness(0.97);
+      }
+      91% {
+        transform: rotate(-1deg) scale(1.005);
+        filter: hue-rotate(-8deg) blur(0px) saturate(1.02) brightness(1.01);
+      }
+    }
+
+    @keyframes glitch1 {
+      30%, 30.3%, 32%, 32.3%, 35%, 35.3%, 38%, 38.3% {
+        opacity: 0.7;
+        transform: translateX(-4px) skew(-3deg);
+      }
+      30.15%, 32.15%, 35.15%, 38.15% {
+        opacity: 0.5;
+        transform: translateX(-5px) skew(-4deg) scaleY(1.05);
+      }
+    }
+
+    @keyframes glitch2 {
+      31%, 31.3%, 34%, 34.3%, 36%, 36.3%, 39%, 39.3% {
+        opacity: 0.6;
+        transform: translateX(4px) skew(3deg);
+      }
+      31.15%, 34.15%, 36.15%, 39.15% {
+        opacity: 0.4;
+        transform: translateX(5px) skew(4deg) scaleY(1.05);
+      }
+    }
+
+    @keyframes scanlines {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(4px); }
+    }
+
+    @keyframes noise {
+      30%, 30.3%, 32%, 32.3%, 35%, 35.3%, 38%, 38.3% {
+        opacity: 0.06;
+      }
+      30.15%, 32.15%, 35.15%, 38.15% {
+        opacity: 0.08;
+      }
+      31%, 34%, 36%, 39% {
+        opacity: 0.04;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes logoGlitch {
+      30%, 32%, 35%, 38% {
+        transform: translateX(1px);
+        filter: saturate(1.2) brightness(1.1) contrast(1.05);
+      }
+      30.15%, 32.15%, 35.15%, 38.15% {
+        transform: translateX(-1px);
+        filter: saturate(0.9) brightness(0.95) contrast(1.1);
+      }
+    }
+
+    /* Freeze state */
+    .freeze .one {
+      animation: none !important;
+    }
+
+    .freeze .glitch-layer,
+    .freeze .scanlines,
+    .freeze .noise {
+      animation: none !important;
+    }
+
+    /* Tagline */
+    .tagline {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #ffffffcc;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      white-space: nowrap;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+
+    .logo-container:hover .tagline {
+      opacity: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .logo-container {
+        font-size: 4rem;
+      }
+      .tagline {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 로고 컨테이너 -->
+  <div class="logo-container" role="button" aria-label="OB1E - Off by One Error. 클릭하거나 스페이스바를 눌러 애니메이션 재시작">
+    <div class="logo">OB<span class="one">1</span>E</div>
+    <div class="glitch-layer glitch-1">OB<span class="one">1</span>E</div>
+    <div class="glitch-layer glitch-2">OB<span class="one">1</span>E</div>
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+    <div class="tagline">Off by One Error</div>
+  </div>
+
+  <!-- 접근성 보조: 상태 알림 -->
+  <div id="status" aria-live="polite" style="position: absolute; left: -9999px;">애니메이션이 시작되었습니다.</div>
+
+  <script>
+    // 전역 타이머 관리
+    let animationTimeout = null;
+
+    /**
+     * 애니메이션을 멈추고 '1' → '/'로 변경
+     */
+    function stopAtSlash() {
+      if (animationTimeout) {
+        clearTimeout(animationTimeout);
+        animationTimeout = null;
+      }
+
+      const container = document.querySelector('.logo-container');
+      container.classList.add('freeze');
+
+      document.querySelectorAll('.one').forEach(el => {
+        el.textContent = '/';
+      });
+
+      // 접근성: 상태 알림
+      document.getElementById('status').textContent = '애니메이션이 일시 정지되었습니다. 1은 /로 변경됨.';
+    }
+
+    /**
+     * 애니메이션을 재시작
+     */
+    function restartAnimation() {
+      if (animationTimeout) {
+        clearTimeout(animationTimeout);
+        animationTimeout = null;
+      }
+
+      const container = document.querySelector('.logo-container');
+      container.classList.remove('freeze');
+
+      // 텍스트 복구
+      document.querySelectorAll('.one').forEach(el => {
+        el.textContent = '1';
+      });
+
+      // 접근성 알림
+      document.getElementById('status').textContent = '애니메이션이 재시작되었습니다.';
+
+      // 애니메이션 리셋: getComputedStyle 사용
+      const elements = document.querySelectorAll('.one, .glitch-1, .glitch-2, .scanlines, .noise, .logo-container');
+      elements.forEach(el => {
+        const currentAnimation = getComputedStyle(el).animation;
+        el.style.animation = 'none';
+        el.offsetHeight; // 강제 리플로우
+        el.style.animation = currentAnimation;
+      });
+
+      // 5초 후 자동 정지
+      animationTimeout = setTimeout(stopAtSlash, 5000);
+    }
+
+    // 초기 로드 후 5초 후 정지
+    window.addEventListener('load', () => {
+      animationTimeout = setTimeout(stopAtSlash, 5000);
+    });
+
+    // 스페이스바로 재시작
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        restartAnimation();
+      }
+    });
+
+    // 클릭으로 재시작
+    document.querySelector('.logo-container').addEventListener('click', restartAnimation);
+  </script>
+</body>
+</html>
