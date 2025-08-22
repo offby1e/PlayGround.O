@@ -1,0 +1,191 @@
+/* Google Fonts: Inter (메인) & IBM Plex Mono (포인트) */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap');
+
+/* CSS 변수: 브랜드 파란색 (#080AD1) */
+:root {
+    --brand-blue: #080AD1;
+}
+
+/* 전역 스타일 */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0d0d0d;
+    background: radial-gradient(circle at 10% 10%, rgba(8, 10, 15, 0.9) 0%, #0c0c0c 30%, #0d0d0d 100%);
+    color: #d1d5db; /* gray-300 */
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, .logo-text {
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+/* --- 인트로 화면 스타일 --- */
+#terminal-input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    padding-right: 5px;
+    width: 100%;
+    caret-color: var(--brand-blue);
+}
+
+/* 터미널 커서 깜빡임 애니메이션 */
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+.cursor {
+    border-right: 2px solid var(--brand-blue);
+    animation: blink 1s step-end infinite;
+}
+
+/* 로고 회전 애니메이션 */
+@keyframes lively-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.logo-rotate {
+    animation: lively-rotate 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+/* 메시지 박스 스타일 */
+.message-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 1px solid var(--brand-blue);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    z-index: 1000;
+    color: white;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.message-box.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- 홈 화면 스타일 --- */
+/* 카드 디자인: 반투명하고 둥근 모서리, 그림자 */
+.glass-card {
+    background-color: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+}
+.glass-card:hover {
+    border-color: var(--brand-blue);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(8, 10, 209, 0.2);
+}
+
+/* 호버 시 콘텐츠 보여주기 */
+.hover-reveal-container {
+    position: relative;
+}
+.hover-reveal-content {
+    opacity: 1; /* This was causing the issue, changed to 1 to always show content */
+    transform: translateY(0);
+    transition: all 0.5s ease-out;
+}
+.hover-reveal-container:hover .hover-reveal-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 스크롤 애니메이션 */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+.fade-in.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* New styles for buttons and inputs */
+.btn-primary {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--brand-blue);
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary:hover {
+    background: #0608b6;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(8, 10, 209, 0.3);
+}
+
+.btn-secondary {
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.contact-input {
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    color: #ffffff;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.contact-input:focus {
+    outline: none;
+    border-color: var(--brand-blue);
+}
+
+.contact-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.contact-message {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.code-window {
+    font-family: 'Fira Code', monospace;
+}
+.keyword { color: var(--brand-blue); }
+.string { color: #a6e22e; }
+.comment { color: rgba(255, 255, 255, 0.4); }
+.function { color: #f92672; }
